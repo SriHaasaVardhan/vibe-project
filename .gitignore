@@ -1,0 +1,5 @@
+**/node_modules/
+.env
+debate_app.db
+debate_app.db-shm
+debate_app.db-wal

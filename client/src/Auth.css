@@ -1,0 +1,405 @@
+/* ─── Auth Page Container ─── */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #020617 0%, #0f172a 40%, #0c1222 70%, #030712 100%);
+    position: relative;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Animated Planet ─── */
+.planet-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.planet {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%,
+            #6366f1 0%,
+            #4338ca 30%,
+            #3730a3 50%,
+            #1e1b4b 80%,
+            #0c0a2a 100%);
+    box-shadow:
+        0 0 80px rgba(99, 102, 241, 0.3),
+        0 0 160px rgba(99, 102, 241, 0.15),
+        inset -30px -30px 60px rgba(0, 0, 0, 0.4),
+        inset 10px 10px 40px rgba(165, 180, 252, 0.1);
+    position: relative;
+    animation: planetGlow 6s ease-in-out infinite;
+}
+
+/* Planet surface texture */
+.planet::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 60% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 30%),
+        radial-gradient(circle at 25% 70%, rgba(139, 92, 246, 0.1) 0%, transparent 25%),
+        radial-gradient(circle at 75% 60%, rgba(99, 102, 241, 0.08) 0%, transparent 20%);
+    animation: surfaceShift 12s ease-in-out infinite;
+}
+
+/* Planet atmosphere glow */
+.planet::after {
+    content: "";
+    position: absolute;
+    inset: -15px;
+    border-radius: 50%;
+    background: radial-gradient(circle, transparent 50%, rgba(99, 102, 241, 0.08) 70%, transparent 80%);
+    animation: atmospherePulse 4s ease-in-out infinite;
+}
+
+/* ─── Planet Rings ─── */
+.planet-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 2px solid;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotateX(75deg);
+    pointer-events: none;
+}
+
+.planet-ring-1 {
+    width: 520px;
+    height: 520px;
+    border-color: rgba(165, 180, 252, 0.15);
+    animation: ringRotate 20s linear infinite;
+}
+
+.planet-ring-2 {
+    width: 600px;
+    height: 600px;
+    border-color: rgba(139, 92, 246, 0.1);
+    border-width: 1.5px;
+    animation: ringRotate 30s linear infinite reverse;
+}
+
+.planet-ring-3 {
+    width: 680px;
+    height: 680px;
+    border-color: rgba(99, 102, 241, 0.06);
+    border-width: 1px;
+    animation: ringRotate 40s linear infinite;
+}
+
+/* ─── Floating Stars ─── */
+.stars-container {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    animation: twinkle var(--duration) ease-in-out infinite;
+    animation-delay: var(--delay);
+    opacity: 0;
+}
+
+/* ─── Auth Glass Card ─── */
+.auth-card {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    margin: 20px;
+    border-radius: 48px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.3),
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(20px) saturate(200%);
+    backdrop-filter: blur(20px) saturate(200%);
+    overflow: hidden;
+    color: #f1f5f9;
+}
+
+/* Refraction shimmer */
+.auth-card::before {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(167, 139, 250, 0.05) 0%, transparent 40%);
+    animation: refract 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.auth-card>* {
+    position: relative;
+    z-index: 1;
+}
+
+.auth-card h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+}
+
+.auth-card p.subtitle {
+    color: #94a3b8;
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+
+/* ─── Auth Form Fields ─── */
+.auth-field {
+    margin-bottom: 18px;
+}
+
+.auth-field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 6px;
+}
+
+.auth-field input {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: #f1f5f9;
+    outline: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.auth-field input:focus {
+    border-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.auth-field input::placeholder {
+    color: #475569;
+}
+
+/* ─── Auth Buttons ─── */
+.auth-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+    transition: all 0.3s ease;
+}
+
+.auth-btn-primary {
+    background: rgba(99, 102, 241, 0.8);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+}
+
+.auth-btn-primary:hover {
+    background: rgba(99, 102, 241, 1);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.auth-btn-primary:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.auth-btn-secondary {
+    background: transparent;
+    color: #a5b4fc;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    margin-top: 12px;
+}
+
+.auth-btn-secondary:hover {
+    background: rgba(99, 102, 241, 0.1);
+}
+
+/* ─── Links ─── */
+.auth-links {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+.auth-links a,
+.auth-links button {
+    color: #a5b4fc;
+    text-decoration: none;
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.auth-links a:hover,
+.auth-links button:hover {
+    text-decoration: underline;
+}
+
+/* ─── Error / Success Messages ─── */
+.auth-message {
+    padding: 10px 16px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.auth-message.error {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+.auth-message.success {
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    color: #86efac;
+}
+
+/* ─── OTP Input Row ─── */
+.otp-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.otp-row .auth-field {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.otp-send-btn {
+    padding: 14px 18px;
+    border: none;
+    border-radius: 20px;
+    background: rgba(99, 102, 241, 0.2);
+    color: #a5b4fc;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.otp-send-btn:hover {
+    background: rgba(99, 102, 241, 0.35);
+}
+
+/* ─── Animations ─── */
+@keyframes planetGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 80px rgba(99, 102, 241, 0.3), 0 0 160px rgba(99, 102, 241, 0.15), inset -30px -30px 60px rgba(0, 0, 0, 0.4), inset 10px 10px 40px rgba(165, 180, 252, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 0 100px rgba(99, 102, 241, 0.4), 0 0 200px rgba(99, 102, 241, 0.2), inset -30px -30px 60px rgba(0, 0, 0, 0.4), inset 10px 10px 40px rgba(165, 180, 252, 0.15);
+    }
+}
+
+@keyframes surfaceShift {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(15deg);
+    }
+}
+
+@keyframes atmospherePulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+}
+
+@keyframes ringRotate {
+    from {
+        transform: translate(-50%, -50%) rotateX(75deg) rotateZ(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotateX(75deg) rotateZ(360deg);
+    }
+}
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes refract {
+
+    0%,
+    100% {
+        transform: translate(0%, 0%) rotate(0deg);
+    }
+
+    33% {
+        transform: translate(5%, -3%) rotate(1deg);
+    }
+
+    66% {
+        transform: translate(-3%, 4%) rotate(-1deg);
+    }
+}
